@@ -1,7 +1,10 @@
 /* Style for completed tasks */
+
+
+
 .completed {
     text-decoration: line-through;
-    color: rgb(164, 146, 53);
+    color: rgb(8, 45, 118);
 }
 
 /* Container for task input and buttons */
@@ -18,13 +21,14 @@
     justify-content: space-between;
     align-items: center;
     margin-top: -17px;
+  
     
 }
 
 /* Style for the settings icon */
 #settingsIcon {
     width: 20px;
-    height: 14px;
+    height: 13px;
     cursor: pointer;
 }
 
@@ -41,10 +45,13 @@
 #taskList {
     list-style-type: none;
     padding-left: 0; /* Remove padding to align with input and buttons */
-    margin-top: 10px;
+    margin-top: 2px;
     margin-inline-end: 10px;
+
     
 }
+
+
 
 /* Modal overlay with fade-in animation */
 .modal {
@@ -92,3 +99,6 @@
     font-size: 24px;
     cursor: pointer;
 }
+
+
+

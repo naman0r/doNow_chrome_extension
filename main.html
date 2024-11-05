@@ -2,34 +2,41 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=10.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>To-Do List</title>
-    <link rel="stylesheet" href="style.css"> <!-- Link to the external CSS file -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="header">
         <h1>To-Do List</h1>
         <img src="images/settings.png" id="settingsIcon" alt="Settings" />
     </div>
-    
+
     <div class="task-controls">
         <input type="text" id="taskInput" placeholder="Enter a new task">
+        
+        <!-- Priority dropdown -->
+        <select id="priorityInput">
+            <option value="unset" selected>-</option>
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+        </select>
+        
         <button id="addTaskButton">Add Task</button>
         <button id="clearTasksButton">Clear Tasks</button>
     </div>
-    
+
     <ul id="taskList"></ul>
 
-    <!-- Settings Modal -->
     <div id="settingsModal" class="modal">
         <div class="modal-content">
             <span class="close" id="closeSettings">&times;</span>
             <h2>Settings</h2>
-            <p>This is the settings section. Add your settings options here.</p>
+            <p>TO-DO settings pannel</p>
         </div>
     </div>
 
-    <!-- Link the JavaScript file -->
     <script src="toDoList.js"></script>
 </body>
 </html>

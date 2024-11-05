@@ -8,6 +8,8 @@ const clearTasksButton = document.getElementById("clearTasksButton");
 const settingsIcon = document.getElementById("settingsIcon");
 const settingsModal = document.getElementById("settingsModal");
 const closeSettings = document.getElementById("closeSettings");
+const priorityInput = document.getElementById("priorityInput"); // New priority field
+
 
 // ========================
 // SETTINGS MODAL FUNCTIONS
@@ -39,52 +41,53 @@ window.addEventListener("click", (event) => {
 // ========================
 
 // Render tasks from Chrome storage
+// Function to render tasks from storage
 function renderTasks() {
     chrome.storage.sync.get(["tasks"], (result) => {
         const tasks = result.tasks || [];
-        tasks.forEach(task => createTaskElement(task.text, task.completed));
+        tasks.forEach(task => createTaskElement(task.text, task.completed, task.priority));
     });
 }
 
-// Create a task element and append it to the list
-function createTaskElement(taskText, completed) {
+// Function to create a task element and append it to the list
+function createTaskElement(taskText, completed, priority) {
     const newTask = document.createElement("li");
 
-    // Create the icon to indicate completion status
+    // Create icon based on completion status
     const icon = document.createElement("img");
     icon.classList.add("task-icon");
     icon.src = completed ? "images/done.png" : "images/notDone.png";
     icon.alt = completed ? "Done" : "Not Done";
-
-    // Toggle completion status on icon click
     icon.addEventListener("click", () => toggleTask(newTask, taskText));
 
-    // Set task text and add completion styling if applicable
-    newTask.textContent = taskText;
+    // Set task text, priority, and styling
+    newTask.textContent = `${taskText} [Priority: ${priority}]`;
     if (completed) newTask.classList.add("completed");
 
-    // Add the icon before the task text
-    newTask.prepend(icon);
-    newTask.addEventListener("click", () => toggleTask(newTask, taskText)); // Toggle task on click
+    newTask.prepend(icon); // Add the icon before the task text
+    newTask.addEventListener("click", () => toggleTask(newTask, taskText));
 
     taskList.appendChild(newTask);
 }
 
-// Add a new task to the list and save it to storage
+// Function to add a new task with priority
 function addTask() {
     const taskText = taskInput.value.trim();
+    const priority = priorityInput.value; // Get priority value
+
     if (taskText !== "") {
-        createTaskElement(taskText, false);
-        saveTask(taskText, false);
+        createTaskElement(taskText, false, priority);
+        saveTask(taskText, false, priority);
         taskInput.value = ""; // Clear the input field
+        priorityInput.value = "unset"; // Reset priority to default
     }
 }
 
-// Save a task to Chrome storage
-function saveTask(taskText, completed) {
+// Function to save a task to Chrome storage
+function saveTask(taskText, completed, priority) {
     chrome.storage.sync.get(["tasks"], (result) => {
         const tasks = result.tasks || [];
-        tasks.push({ text: taskText, completed: completed });
+        tasks.push({ text: taskText, completed: completed, priority: priority });
         chrome.storage.sync.set({ tasks: tasks });
     });
 }
