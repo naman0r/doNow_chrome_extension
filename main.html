@@ -1,42 +1,129 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>To-Do List</title>
+    <title>DoNow! To-do List</title>
+
+
+    <!-- importing a cool font. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Galindo&display=swap" rel="stylesheet">    
+
+
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="header">
-        <h1>To-Do List</h1>
-        <img src="images/settings.png" id="settingsIcon" alt="Settings" />
-    </div>
+    <div class="wrap">
+        <div class="header">
+            <h1>DoNow! To do list</h1>
+            <div class="main-top-right-pannel">
+                <a href="settings.html">
+                    <img src="images/settings.png" id="settingsIcon" alt="Settings" /> 
+                </a>
+                <div class="joke-container">
+                    <p id="setup"></p>
+                    <p id="punchline"></p>
+                </div>
 
-    <div class="task-controls">
-        <input type="text" id="taskInput" placeholder="Enter a new task">
+            </div>
         
-        <!-- Priority dropdown -->
-        <select id="priorityInput">
-            <option value="unset" selected>-</option>
-            <option value="low">Low</option>
-            <option value="medium">Medium</option>
-            <option value="high">High</option>
-        </select>
-        
-        <button id="addTaskButton">Add Task</button>
-        <button id="clearTasksButton">Clear Tasks</button>
-    </div>
-
-    <ul id="taskList"></ul>
-
-    <div id="settingsModal" class="modal">
-        <div class="modal-content">
-            <span class="close" id="closeSettings">&times;</span>
-            <h2>Settings</h2>
-            <p>TO-DO settings pannel</p>
         </div>
-    </div>
 
-    <script src="toDoList.js"></script>
+        <div class="task-controls">
+            <input type="text" id="taskInput" placeholder="Enter a new task">
+            
+            <!-- Priority dropdown -->
+            <select id="priorityInput">
+                <option value="unset" selected>-</option>
+                <option value="1">1 [Lowest prioriity]</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10 [Highest priority]</option>
+            </select>
+            
+            <button id="addTaskButton">Add Task</button>
+            <button id="clearTasksButton">Clear Tasks</button>
+            <button id="clearCompletedTasksButton">Clear Completed</button>
+        </div>
+
+        <ul id="taskList">
+
+            <!-- tasks will by dynamicaly generated-->
+
+        </ul>
+
+        <!-- Settings modal -->
+        <div id="settingsModal" class="modal">
+            <div class="modal-content">
+                <span class="close" id="closeSettings">&times;</span>
+                <h2>Settings</h2>
+                
+                <!-- Email input field -->
+                <label for="emailInput">Email:</label>
+                <input type="email" id="emailInput" placeholder="Enter your email" required>
+                <button id="saveEmailButton">Save Email</button>
+                <button id="sendEmailButton">Send Email</button>
+                <p id="statusMessage" style="color: green;"></p> <!-- Status message for feedback -->
+            </div>
+        </div>
+
+        <script src="toDoList.js"></script>
+        
+        <script>
+            // Open the settings modal
+            document.getElementById("settingsIcon").addEventListener("click", () => {
+                document.getElementById("settingsModal").style.display = "flex";
+                loadEmail(); // Load email from storage when modal opens
+            });
+
+            // Close the settings modal
+            document.getElementById("closeSettings").addEventListener("click", () => {
+                document.getElementById("settingsModal").style.display = "none";
+            });
+
+            // Save the email to Chrome storage
+            document.getElementById("saveEmailButton").addEventListener("click", () => {
+                const email = document.getElementById("emailInput").value;
+                
+                if (email) { // Ensure an email is entered
+                    chrome.storage.sync.set({ email: email }, () => {
+                        document.getElementById("statusMessage").textContent = "Email saved successfully!";
+                        setTimeout(() => {
+                            document.getElementById("statusMessage").textContent = ""; // Clear the message after a short delay
+                        }, 2000);
+                    });
+                } else {
+                    alert("Please enter a valid email.");
+                }
+            });
+
+            // Load the email from Chrome storage
+            function loadEmail() {
+                chrome.storage.sync.get("email", (result) => {
+                    if (result.email) {
+                        document.getElementById("emailInput").value = result.email; // Display saved email
+                    }
+                });
+            }
+
+            // Close the modal when clicking outside the modal content
+            window.addEventListener("click", (event) => {
+                const modal = document.getElementById("settingsModal");
+                if (event.target === modal) {
+                    modal.style.display = "none";
+                }
+            });
+        </script>
+
+    </div>
 </body>
 </html>

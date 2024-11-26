@@ -1,13 +1,19 @@
 {
   "manifest_version": 3,
-  "name": "To-Do List Extension",
+  "name": "DoNow! To-do list",
   "version": "1.0",
+  "description": "A simple to-do list chrome extension.",
+  "author": "Naman Rusia",
+  
   "action": {
     "default_popup": "main.html",
     "default_icon": "images/toDoListIcon2.png"
   },
   "permissions": ["storage"]
 }
+
+
+
 
 
 

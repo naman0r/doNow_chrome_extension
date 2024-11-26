@@ -1,36 +1,94 @@
+/* Remove default margin and padding */
+/* html, body {
+    margin: 0;
+    padding: 0;
+} */
+
+/* ========================
+   General Styles
+======================== */
+
+
+
+.wrap{ 
+    margin: 0.2em; 
+}
+
+
+* { /* *= for all in html */
+    font-family: "Galindo", serif;
+}
+
+body{
+
+    background-color: rgba(1, 1, 1, 0.96);
+    border-radius: 2em;
+    border: 2px solid powderblue; 
+
+}
+
+.header {
+
+    background-color: aqua; 
+    border-radius: 1.7em; 
+    box-sizing: border-box;
+    align-items: center; 
+    margin: 6px 4px 10px 4px; 
+    padding-left: 25px; 
+    
+    display:flex; 
+    border: 2px solid red; 
+    justify-content:space-between; 
+    padding-right: 1em; 
+    
+}
+
+
+/* Remove bullet points from the to-do list */
+#taskList {
+    list-style-type: none;
+    padding-left: 10px;  /*Add left padding for symmetry */
+    margin-top: 2px;
+    margin-inline-end: 10px;
+}
+
 /* Style for completed tasks */
-
-
-
 .completed {
     text-decoration: line-through;
     color: rgb(8, 45, 118);
 }
 
+/* ========================
+   Task Container and Controls
+======================== */
+
 /* Container for task input and buttons */
 .task-controls {
+    margin-right: 10px;
+    margin-left: 10px; 
     display: flex;
     gap: 10px;
     align-items: center;
     margin-top: 10px;
 }
 
-/* Style for the header with the title and settings icon */
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: -17px;
-  
-    
+/* Additional styling for individual tasks 
+.task-item {
+    padding: 10px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    list-style-type: none;
+}*/
+
+.task-item {
+    padding: 10px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    list-style-type: none;
+    background-color: #808080; /* Neutral gray as a fallback */
+    transition: background-color 0.3s ease; /* Smooth color changes */
 }
 
-/* Style for the settings icon */
-#settingsIcon {
-    width: 20px;
-    height: 13px;
-    cursor: pointer;
-}
 
 /* Style for the task icon next to each to-do item */
 .task-icon {
@@ -39,19 +97,104 @@
     margin-right: 5px;
     cursor: pointer;
     vertical-align: middle; /* Aligns the icon with the text */
+
 }
 
-/* Remove bullet points from the to-do list */
-#taskList {
-    list-style-type: none;
-    padding-left: 0; /* Remove padding to align with input and buttons */
-    margin-top: 2px;
-    margin-inline-end: 10px;
+/* ========================
+   Header and Icon Styling
+======================== */
 
+/* Style for the settings icon */
+#settingsIcon {
+    width: 25px;
+    height: 17px;
+    cursor: pointer;
     
 }
 
+/* ========================
+   Button Styles with Hover Effects
+======================== */
 
+/* General button styling */
+button {
+    padding: 8px 12px;
+    margin: 5px;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 14px;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition for hover effect */
+}
+
+/* Add Task Button */
+#addTaskButton {
+    background-color: #007bff; /* Blue color */
+    border: 2px solid rgba(76, 160, 186, 0.746); 
+    
+}
+
+#addTaskButton:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+    transform: scale(1.05); /* Slightly enlarges the button */
+}
+
+/* Clear All Tasks Button */
+#clearTasksButton {
+    background-color: #ff5722; /* Orange color */
+    border: 2px solid rgba(76, 160, 186, 0.746); 
+}
+
+#clearTasksButton:hover {
+    background-color: #e64a19; /* Darker orange on hover */
+    transform: scale(1.05); /* Slightly enlarges the button */
+    text-shadow: #0a3ee9;
+}
+
+/* Clear Completed Tasks Button */
+#clearCompletedTasksButton {
+    background-color: #28a745; /* Green color */
+    border: 2px solid rgba(76, 160, 186, 0.746); 
+}
+
+#clearCompletedTasksButton:hover {
+    background-color: #218838; /* Darker green on hover */
+    transform: scale(1.05); /* Slightly enlarges the button */
+}
+
+/* ========================
+   Task Priority Styles
+======================== */
+
+/* Styles for tasks based on priority levels */
+.task-unset {
+    background-color: #40a4b4; /* Gray for unset */
+}
+
+.task-low {
+    background-color: #d0f0c0; /* Light green for low priority */
+}
+
+.task-medium {
+    background-color: #ffe4b5; /* Light orange for medium priority */
+}
+
+.task-high {
+    background-color: #ffcccb; /* Light red for high priority */
+}
+
+
+
+
+
+
+
+
+/* ========================
+   Settings icon stuff: 
+======================== */
 
 /* Modal overlay with fade-in animation */
 .modal {
@@ -74,11 +217,6 @@
     opacity: 1; /* Fully visible when shown */
 }
 
-/* Slide down animation when modal is shown */
-.modal.show .modal-content {
-    transform: translateY(0); /* Reset to original position */
-}
-
 /* Modal content with slide-down animation */
 .modal-content {
     background-color: white;
@@ -88,10 +226,15 @@
     max-width: 300px;
     text-align: center;
     transform: translateY(-20px); /* Start slightly above */
-    transition: transform 0.3s ease; /* Smooth slide-down animation */
+    transition: transform 10s ease-in-out; /* Smooth slide-down animation */
 }
 
-/* Close button */
+/* Slide down animation when modal is shown */
+.modal.show .modal-content {
+    transform: translateY(0); /* Reset to original position */
+}
+
+/* Close button for the settings modal */
 .close {
     position: absolute;
     top: 10px;
@@ -100,5 +243,64 @@
     cursor: pointer;
 }
 
+.joke-container{
+    border-radius : 1.7em; 
+    background-color: #6270cc;
+    border: 2px solid powderblue; 
+    box-sizing: border-box;
+    align-items: center; 
+    /*margin : 5px -7px 5px 0px; */
+    margin: 2px 1px 2px 0px; 
+    border: 2px solid rgb(0, 0, 0); 
+    padding: 0px 10px 0px 10px; 
+    line-height: 3px;
+    
+
+   
+}
 
 
+
+#setup{
+    color: rgb(8, 8, 71); 
+    text-decoration: italic; 
+}
+#punchline{
+    text-decoration: underline;
+    text-decoration: bold;
+    color:rgb(83, 9, 9);
+}
+
+
+
+.header-settings{
+
+    justify-content:space-between;
+    display: flex; 
+    background-color: white;
+    img{
+        size: 10px 10px; 
+
+    }
+
+    display:flex; 
+
+
+}
+
+
+.back-button{
+
+    width: 10%;
+     
+
+
+}
+
+.main-top-right-pannel{
+    display: flex; 
+
+    img{ /* for the settings icon */
+        margin-top : 15px; 
+    }
+}

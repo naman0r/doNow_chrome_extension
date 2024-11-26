@@ -4,21 +4,53 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Settings</title>
-    <link rel="stylesheet" href="style.css"> <!-- Reuse your existing CSS file -->
+    <link rel="stylesheet" href="style.css"> <!-- Reuse the existing CSS file -->
 </head>
 <body>
-    <h1>Settings</h1>
-    <p>This is your settings page. Add your settings options here.</p>
-    
-    <!-- Add other settings elements here, e.g., toggle switches, options, etc. -->
-    
-    <button id="closeSettingsButton">Close Settings</button>
+
+    <div class="header-settings">
+        <a href="main.html" class= "back-button"> <- </a>
+        <a href="info.html" style = "color: rgb(0, 0, 0);">How to use?</a>
+    </div>
+
+    <div style = "color: rgb(200, 74, 74); display: flex; font-size: 3em; background-color: white; text-align: center; ">Settings</div>
+
+
+    <!-- Email input field for user to enter their email -->
+    <label for="emailInput">Email:</label>
+    <input type="email" id="emailInput" placeholder="Enter your email address" required>
+    <button id="saveEmailButton">Save Email</button>
+    <a href="https://www.docs.google.com/forms/d/e/1FAIpQLSfzbKAGurJWplmr_w-XICkcSFX69HL-RRTsbGAmSa_A_Q-kSg/viewform?usp=sf_link" target="_blank"  rel="noopener noreferrer" style = "color:green;" >Please click this to give me feedback!</a>
+
+
+
 
     <script>
-        // Close the settings window when the button is clicked
-        document.getElementById("closeSettingsButton").addEventListener("click", () => {
-            window.close();
+        // Load the email from Chrome storage when the settings page is opened
+        document.addEventListener("DOMContentLoaded", () => {
+            chrome.storage.sync.get("email", (result) => {
+                if (result.email) {
+                    document.getElementById("emailInput").value = result.email; // Display saved email
+                }
+            });
         });
+
+        // Save the email to Chrome storage
+        document.getElementById("saveEmailButton").addEventListener("click", () => {
+            const email = document.getElementById("emailInput").value;
+            
+            if (email) { // Ensure an email is entered
+                chrome.storage.sync.set({ email: email }, () => {
+                    document.getElementById("statusMessage").textContent = "Email saved successfully!";
+                    setTimeout(() => {
+                        document.getElementById("statusMessage").textContent = ""; // Clear the message after a short delay
+                    }, 2000);
+                });
+            } else {
+                alert("Please enter a valid email.");
+            }
+        });
+
     </script>
 </body>
 </html>
